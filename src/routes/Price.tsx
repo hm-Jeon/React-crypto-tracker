@@ -91,7 +91,7 @@ function Price({ priceData }: PriceProps) {
       </PriceColumn>
       <PriceColumn>
         <PriceTitle>Market cap</PriceTitle>
-        <PriceContent>{data.market_cap}</PriceContent>
+        <PriceContent>{data.market_cap.toLocaleString("us")}</PriceContent>
       </PriceColumn>
       <PercentGrid>
         <PercentGridItem>

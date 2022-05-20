@@ -238,11 +238,11 @@ function Coin() {
           <Overview columns={2}>
             <OverviewItem>
               <span>total supply</span>
-              <span>{tickersData?.total_supply.toLocaleString("kr")}</span>
+              <span>{tickersData?.total_supply.toLocaleString("us")}</span>
             </OverviewItem>
             <OverviewItem>
               <span>max supply</span>
-              <span>{tickersData?.max_supply.toLocaleString("kr")}</span>
+              <span>{tickersData?.max_supply.toLocaleString("us")}</span>
             </OverviewItem>
           </Overview>
           <Tabs>
