@@ -83,15 +83,27 @@ function Price({ priceData }: PriceProps) {
     <Container>
       <PriceColumn>
         <PriceTitle>Current Price</PriceTitle>
-        <PriceContent>{data.price.toFixed(3)}</PriceContent>
+        <PriceContent>
+          {data.price.toLocaleString("us", {
+            maximumFractionDigits: 3,
+          })}
+        </PriceContent>
       </PriceColumn>
       <PriceColumn>
         <PriceTitle>ATH Price</PriceTitle>
-        <PriceContent>{data.ath_price.toFixed(3)}</PriceContent>
+        <PriceContent>
+          {data.ath_price.toLocaleString("us", {
+            maximumFractionDigits: 3,
+          })}
+        </PriceContent>
       </PriceColumn>
       <PriceColumn>
         <PriceTitle>Market cap</PriceTitle>
-        <PriceContent>{data.market_cap.toLocaleString("us")}</PriceContent>
+        <PriceContent>
+          {data.market_cap.toLocaleString("us", {
+            maximumFractionDigits: 3,
+          })}
+        </PriceContent>
       </PriceColumn>
       <PercentGrid>
         <PercentGridItem>
