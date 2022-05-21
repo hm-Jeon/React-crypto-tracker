@@ -1,4 +1,4 @@
-import { Fragment, memo } from "react";
+import { Fragment, memo, useState } from "react";
 import { useQuery } from "react-query";
 import { Route, Routes, useMatch } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -22,6 +22,11 @@ export interface IOhlc {
   volume: number;
 }
 
+interface ITerm {
+  text: string;
+  value: number;
+}
+
 const Loader = styled.h1`
   text-align: center;
 `;
@@ -29,16 +34,15 @@ const Loader = styled.h1`
 const Tab = styled.span<TabProps>`
   text-align: center;
   text-transform: uppercase;
+  color: ${props =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  font-size: 14px;
 
   a {
     display: block;
     padding: 7px 0;
     background-color: rgba(0, 0, 0, 0.5);
-    color: ${props =>
-      props.isActive ? props.theme.accentColor : props.theme.textColor};
-    font-size: 14px;
     font-weight: 400;
-    /* font-weight: ${props => (props.isActive ? 600 : 400)}; */
   }
 `;
 
@@ -66,10 +70,46 @@ const Container = styled.div`
   border-radius: 0 0 10px 10px;
 `;
 
+const TermTabs = styled(Tabs)<{ columns: number }>`
+  grid-template-columns: repeat(${props => props.columns}, 1fr);
+  margin: 0;
+`;
+
+const TermTab = styled(Tab)`
+  padding: 7px 0;
+  cursor: pointer;
+`;
+
+const termArray: [ITerm, ITerm, ITerm, ITerm] = [
+  {
+    text: "1w",
+    value: -7,
+  },
+  {
+    text: "2w",
+    value: -14,
+  },
+  {
+    text: "1m",
+    value: -31,
+  },
+  {
+    text: "1y",
+    value: -365,
+  },
+];
+
 function Chart({ coinId, coinName }: { coinId: string; coinName: string }) {
   const { isLoading, data } = useQuery<IOhlc[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
+
+  // 차트 기간 state
+  const [term, setTerm] = useState(-7);
+
+  const TermTabOnClick = (term: number): void => {
+    setTerm(term);
+  };
 
   const matchCandlestick = useMatch("/:coinId/chart/candlestick");
   const matchLine = useMatch("/:coinId/chart/line");
@@ -89,14 +129,27 @@ function Chart({ coinId, coinName }: { coinId: string; coinName: string }) {
             </Tab>
           </Tabs>
           <Container>
+            <TermTabs columns={termArray.length}>
+              {termArray.map(item => (
+                <TermTab
+                  key={item.text}
+                  isActive={term === item.value}
+                  onClick={() => TermTabOnClick(item.value)}
+                >
+                  {item.text}
+                </TermTab>
+              ))}
+            </TermTabs>
             <Routes>
               <Route
                 path="candlestick"
-                element={<CandlestickChart data={data!} />}
+                element={<CandlestickChart data={data!.slice(term)} />}
               />
               <Route
                 path="line"
-                element={<LineChart coinName={coinName} data={data!} />}
+                element={
+                  <LineChart coinName={coinName} data={data!.slice(term)} />
+                }
               />
             </Routes>
           </Container>
