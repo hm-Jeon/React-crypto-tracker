@@ -77,8 +77,6 @@ const PercentGrid = styled.div`
 function Price({ priceData }: PriceProps) {
   const data = priceData.quotes.USD;
 
-  console.log(data);
-
   return (
     <Container>
       <PriceColumn>
