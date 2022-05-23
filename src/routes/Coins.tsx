@@ -1,20 +1,44 @@
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
+  min-width: 480px;
   max-width: 480px;
   padding: 0px 20px;
   margin: 0 auto;
 `;
 
 const Header = styled.header`
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  padding: 1rem 0;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 0.5rem;
+`;
+
+const DarkModeBtn = styled.button`
+  padding: 0.3em;
+  border: 0;
+  border-radius: 0.3em;
+  color: ${props => props.theme.textColor};
+  background-color: ${props => props.theme.coinBoxBgColor};
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
 `;
 
 const Title = styled.h1`
@@ -30,8 +54,8 @@ const Loader = styled.div`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.coinsCardBgColor};
+  color: ${props => props.theme.textColor};
   margin-bottom: 10px;
   border-radius: 15px;
 
@@ -72,6 +96,9 @@ function Coins() {
   // react-query는 fetch한 data를 캐시에 저장해둔다. 한번 불러온 데이터를 다시 불러오지 않는다.
   // react-query는 고유한 query key값이 필요하다.
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const isDark = useRecoilValue(isDarkAtom);
+  const setIsDark = useSetRecoilState(isDarkAtom);
+  const toggleIsDark = () => setIsDark(current => !current);
 
   return (
     <Container>
@@ -79,6 +106,11 @@ function Coins() {
         <title>Coins</title>
       </Helmet>
       <Header>
+        <BtnContainer>
+          <DarkModeBtn onClick={toggleIsDark}>
+            {isDark ? "Light Mode" : "Dark Mode"}
+          </DarkModeBtn>
+        </BtnContainer>
         <Title>Coins</Title>
       </Header>
       {isLoading ? (

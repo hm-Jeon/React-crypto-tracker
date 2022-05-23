@@ -1,5 +1,6 @@
 import ApexChart from "react-apexcharts";
-import { theme } from "../theme";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 import { IOhlc } from "./Chart";
 
 interface LineChartProps {
@@ -8,6 +9,8 @@ interface LineChartProps {
 }
 
 export function LineChart({ coinName, data }: LineChartProps) {
+  const isDark = useRecoilValue(isDarkAtom);
+
   return (
     <ApexChart
       type="line"
@@ -27,23 +30,22 @@ export function LineChart({ coinName, data }: LineChartProps) {
           height: "auto",
           width: "100%",
           fontFamily: `'Source Sans Pro', sans-serif`,
-          foreColor: theme.textColor,
           background: "transperent",
           toolbar: {
             show: false,
           },
         },
         theme: {
-          mode: "dark",
+          mode: isDark ? "dark" : "light",
         },
-        colors: ["#8c7ae6"],
+        colors: ["#0984e3"],
         fill: {
           type: "gradient",
           gradient: {
             shade: "light",
             type: "vertical",
-            gradientToColors: ["#9c88ff"],
-            stops: [45, 55],
+            gradientToColors: ["#4cd137"],
+            stops: [5, 95],
           },
         },
         stroke: {
@@ -68,7 +70,6 @@ export function LineChart({ coinName, data }: LineChartProps) {
             width: 1,
             opacity: 0,
             stroke: {
-              color: theme.accentColor,
               width: 2,
               dashArray: 5,
             },

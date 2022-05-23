@@ -10,6 +10,7 @@ import Chart from "./Chart";
 import Price from "./Price";
 
 const Container = styled.div`
+  min-width: 480px;
   max-width: 480px;
   padding: 0px 20px;
   margin: 0 auto;
@@ -18,20 +19,26 @@ const Container = styled.div`
 const Header = styled.header`
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  padding: 1rem 0;
+`;
 
-  a {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    transition: color 0.2s ease-in-out;
+const BtnContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 0 0.5rem;
+`;
 
-    &:hover {
-      color: ${props => props.theme.accentColor};
-    }
-  }
+const BackBtn = styled(Link)`
+  padding: 0.3em;
+  border: 0;
+  border-radius: 0.3em;
+  color: ${props => props.theme.textColor};
+  background-color: ${props => props.theme.coinBoxBgColor};
+  font-family: inherit;
+  cursor: pointer;
 `;
 
 const Title = styled.h1`
@@ -49,7 +56,7 @@ const Overview = styled.div<OverviewProps>`
   justify-content: space-between; */
   display: grid;
   grid-template-columns: repeat(${props => props.columns}, auto);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.coinBoxBgColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -86,7 +93,7 @@ const Tab = styled.span<TabProps>`
   a {
     display: block;
     padding: 7px 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.coinBoxBgColor};
     border-radius: 10px;
     color: ${props =>
       props.isActive ? props.theme.accentColor : props.theme.textColor};
@@ -211,7 +218,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
-        <Link to="/">{"< Back"}</Link>
+        <BtnContainer>
+          <BackBtn to={"/"}>Back</BackBtn>
+        </BtnContainer>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>

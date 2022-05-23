@@ -41,7 +41,7 @@ const Tab = styled.span<TabProps>`
   a {
     display: block;
     padding: 7px 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: ${props => props.theme.coinBoxBgColor};
     font-weight: 400;
   }
 `;
@@ -66,7 +66,7 @@ const Tabs = styled.div`
 
 const Container = styled.div`
   margin-bottom: 25px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.coinBoxBgColor};
   border-radius: 0 0 10px 10px;
 `;
 

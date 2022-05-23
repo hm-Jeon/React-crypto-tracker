@@ -20,7 +20,7 @@ const Column = styled.div`
   justify-content: space-between;
   padding: 10px 20px;
   margin-bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.coinBoxBgColor};
   border-radius: 10px;
 `;
 const ColumnTitle = styled.span`
@@ -58,7 +58,7 @@ const PercentGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   padding: 10px;
   gap: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.coinBoxBgColor};
   border-radius: 10px;
 
   ${PercentGridItem}:first-child {

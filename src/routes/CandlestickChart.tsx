@@ -1,4 +1,6 @@
 import ApexChart from "react-apexcharts";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 import { IOhlc } from "./Chart";
 
 interface CandlestickChartProps {
@@ -6,6 +8,8 @@ interface CandlestickChartProps {
 }
 
 export function CandlestickChart({ data }: CandlestickChartProps) {
+  const isDark = useRecoilValue(isDarkAtom);
+
   return (
     <ApexChart
       type="candlestick"
@@ -43,7 +47,7 @@ export function CandlestickChart({ data }: CandlestickChartProps) {
           },
         },
         theme: {
-          mode: "dark",
+          mode: isDark ? "dark" : "light",
         },
         grid: {
           show: false,

@@ -1,7 +1,10 @@
 import { Fragment } from "react";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { darkTheme, lightTheme } from "./theme";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 // styled-components의 createGlobalStyle을 사용해 전역에 적용될 스타일을 지정할 수 있다.
 const GlobalStyle = createGlobalStyle`
@@ -68,12 +71,15 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  const isDark = useRecoilValue(isDarkAtom);
   // <Fragment>는 유령 컴포넌트이다. 여러 개의 컴포넌트를 return하고 싶을 때 <div> 대신 사용하면 좋다.
   // 부모 엘리먼트 없이 여러 개의 컴포넌트를 return할 수 있다.
   return (
     <Fragment>
-      <GlobalStyle />
-      <Router />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Router />
+      </ThemeProvider>
       <ReactQueryDevtools />
     </Fragment>
   );
