@@ -7,7 +7,7 @@ import { fetchCoins } from "../api";
 import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
-  min-width: 480px;
+  /* min-width: 480px; */
   max-width: 480px;
   padding: 0px 20px;
   margin: 0 auto;

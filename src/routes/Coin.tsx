@@ -10,7 +10,7 @@ import Chart from "./Chart";
 import Price from "./Price";
 
 const Container = styled.div`
-  min-width: 480px;
+  /* min-width: 480px; */
   max-width: 480px;
   padding: 0px 20px;
   margin: 0 auto;
