@@ -80,7 +80,7 @@ const TermTab = styled(Tab)`
   cursor: pointer;
 `;
 
-const termArray: [ITerm, ITerm, ITerm, ITerm] = [
+/* const termArray: [ITerm, ITerm, ITerm, ITerm] = [
   {
     text: "1w",
     value: -7,
@@ -97,12 +97,14 @@ const termArray: [ITerm, ITerm, ITerm, ITerm] = [
     text: "1y",
     value: -365,
   },
-];
+]; */
 
 function Chart({ coinId, coinName }: { coinId: string; coinName: string }) {
   const { isLoading, data } = useQuery<IOhlc[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
+
+  console.log(data);
 
   // 차트 기간 state
   const [term, setTerm] = useState(-7);
@@ -129,7 +131,7 @@ function Chart({ coinId, coinName }: { coinId: string; coinName: string }) {
             </Tab>
           </Tabs>
           <Container>
-            <TermTabs columns={termArray.length}>
+            {/* <TermTabs columns={termArray.length}>
               {termArray.map(item => (
                 <TermTab
                   key={item.text}
@@ -139,7 +141,7 @@ function Chart({ coinId, coinName }: { coinId: string; coinName: string }) {
                   {item.text}
                 </TermTab>
               ))}
-            </TermTabs>
+            </TermTabs> */}
             <Routes>
               <Route
                 path="candlestick"
